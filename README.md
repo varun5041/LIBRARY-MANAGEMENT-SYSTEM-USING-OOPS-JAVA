@@ -1,18 +1,60 @@
-# LIBRARY-MANAGEMENT-SYSTEM-USING-OOPS-JAVA
-This Library Management System has the following options:
+# 📚 Library Management System
 
-Add Models.Book: Add a new book to the library.
+A console-based **Library Management System** built using **Java, Object-Oriented Programming (OOP), JDBC, and MySQL**.
 
-Show all Books: Display all the books available in the library.
+This project was initially designed using Java collections and OOP concepts and was later integrated with a MySQL database using JDBC for persistent data storage.
 
-Remove Models.Book: Remove a book from the library based on its ID.
+---
 
-Add Members: Add new members to the library with their ID and name.
+## 🚀 Features
 
-Remove Members: Remove a Models.Member from the library based on their ID.
+The application provides the following features:
 
-Show all Members: Display all the members of the library.
+- 📖 Add a new book
+- 📚 Display all available books
+- 🗑️ Remove a book
+- 👤 Add a library member
+- ❌ Remove a library member
+- 👥 Display all library members
+- 📕 Issue a book to a member
+- 📋 Display all borrowed books
+- 🔄 Return a borrowed book
+- 💾 Persistent data storage using MySQL
 
-Exit: Exit the program.
+---
 
-These options are provided through a menu, allowing users to perform actions based on their needs.
+## 🛠️ Technologies Used
+
+- **Java**
+- **JDBC (Java Database Connectivity)**
+- **MySQL**
+- **MySQL Connector/J**
+- **IntelliJ IDEA**
+- **Object-Oriented Programming**
+
+---
+
+## 🏗️ Project Architecture
+
+The project follows a layered architecture:
+
+```text
+Main
+ │
+ ▼
+AdminServices (Interface)
+ │
+ ▼
+SqlAdminServiceimpl
+ │
+ ├───────────────┬────────────────┬─────────────────┐
+ ▼               ▼                ▼
+BookRepository  MemberRepository  IssueRepository
+ │               │                │
+ └───────────────┴────────────────┘
+                 │
+                 ▼
+          DatabaseConnection
+                 │
+                 ▼
+              MySQL
