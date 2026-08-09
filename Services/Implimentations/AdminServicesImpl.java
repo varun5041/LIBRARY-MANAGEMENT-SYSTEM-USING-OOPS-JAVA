@@ -5,6 +5,8 @@ import Models.Book;
 import Models.Member;
 import Services.AdminServices;
 
+import java.sql.SQLException;
+
 public class AdminServicesImpl implements AdminServices {
     Admin admin;
 
@@ -131,5 +133,10 @@ public class AdminServicesImpl implements AdminServices {
         }
 
         throw new NullPointerException("Member not found!");
+    }
+
+    @Override
+    public void returnBook(int returnMemberId, int returnBookId) throws SQLException {
+
     }
 }

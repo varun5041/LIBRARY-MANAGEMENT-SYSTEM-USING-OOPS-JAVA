@@ -51,4 +51,49 @@ public class IssueRepository {
             );
         }
     }
+
+    public void returnBook(int memberId, int bookId) throws SQLException {
+
+        String sql = "SELECT book_id, book_title, book_author " +
+                "FROM borrowed_books " +
+                "WHERE member_id = ? AND book_id = ?";
+
+        Connection connection = databaseConnection.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        statement.setInt(1, memberId);
+        statement.setInt(2, bookId);
+
+        ResultSet rs = statement.executeQuery();
+
+        if (!rs.next()) {
+            System.out.println("This book is not borrowed by this member!");
+            return;
+        }
+
+        int returnedBookId = rs.getInt("book_id");
+        String title = rs.getString("book_title");
+        String author = rs.getString("book_author");
+
+        // Add book back to books table
+        bookRepository.addBook(
+                new Book(returnedBookId, title, author)
+        );
+
+        // Remove from borrowed_books
+        String deleteSql =
+                "DELETE FROM borrowed_books " +
+                        "WHERE member_id = ? AND book_id = ?";
+
+        PreparedStatement deleteStatement =
+                connection.prepareStatement(deleteSql);
+
+        deleteStatement.setInt(1, memberId);
+        deleteStatement.setInt(2, bookId);
+
+        deleteStatement.executeUpdate();
+
+        System.out.println("Book returned successfully!");
+    }
 }

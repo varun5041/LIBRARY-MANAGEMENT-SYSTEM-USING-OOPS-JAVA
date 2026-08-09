@@ -1,15 +1,18 @@
 package Application;
 
 import Models.Admin;
+import Services.AdminServices;
 import Services.Implimentations.AdminServicesImpl;
+import Services.Implimentations.SqlAdminServiceimpl;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner sc = new Scanner(System.in);
         Admin a = new Admin("Varun", 5041);
-        AdminServicesImpl service = new AdminServicesImpl(a);
+        AdminServices service = new SqlAdminServiceimpl(a);
         while (true) {
             System.out.println("WELCOME TO LIBRARY!: ");
             System.out.println("=================================");
@@ -21,7 +24,8 @@ public class Main {
             System.out.println("6.Show all Members");
             System.out.println("7.Issue Book To a member");
             System.out.println("8.Show Books Borrowed By members");
-            System.out.println("9.Exit");
+            System.out.println("9.Return a book back");
+            System.out.println("10.Exit");
             System.out.println("=================================");
             System.out.println("ENTER YOUR CHOICE:");
             int choice = sc.nextInt();
@@ -37,13 +41,13 @@ public class Main {
                     System.out.println("Enter Book Author:");
                     String bookauthor = sc.nextLine();
 
-                    service.addbook(bookid, BookTitle, bookauthor);  // Ensure addbook is defined
+                    service.addbook(bookid, BookTitle, bookauthor);
                     System.out.println("BOOK ADDED!");
                     break;
 
                 case 2:
                     System.out.println("LIST OF ALL THE BOOKS");
-                    service.showBooks();  // Ensure showBooks is defined
+                    service.showBooks();
                     break;
 
                 case 3:
@@ -68,8 +72,8 @@ public class Main {
                     System.out.println("MEMBER removed successfully!");
                     break;
                 case 6:
-                    System.out.println("MEMBERS LIST ASSOCIATED WITH LIBRARY");
-                    service.showmembers();  // Ensure showmembers is defined
+                    System.out.println("MEMBERS LIST ASSOCIATED WITH LIBRARY:");
+                    service.showmembers();
                     break;
                 case 7:
                     service.showmembers();
@@ -79,11 +83,25 @@ public class Main {
                     System.out.println("Enter Book Id To Give To Member");
                     int bookidtogive= sc.nextInt();
                     service.giveBookToMember(memberID,bookidtogive);
+                    break;
                 case 8:
-                    System.out.println("Books Borrowed Followed By members");
                     service.getBorrowedBooks();
                     break;
                 case 9:
+                    service.showmembers();
+
+                    System.out.println("Enter Member ID:");
+                    int returnMemberId = sc.nextInt();
+
+                    service.getBorrowedBooks();
+
+                    System.out.println("Enter Book ID to Return:");
+                    int returnBookId = sc.nextInt();
+
+                    service.returnBook(returnMemberId, returnBookId);
+
+                    break;
+                case 10:
                     System.out.println("Exiting...");
                     sc.close();
                     return;
