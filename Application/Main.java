@@ -1,7 +1,7 @@
 package Application;
 
 import Models.Admin;
-import Services.AdminServices;
+import Services.Implimentations.AdminServicesImpl;
 
 import java.util.*;
 
@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         Admin a = new Admin("Varun", 5041);
-        AdminServices service = new AdminServices(a);
+        AdminServicesImpl service = new AdminServicesImpl(a);
         while (true) {
             System.out.println("WELCOME TO LIBRARY!: ");
             System.out.println("=================================");
@@ -19,8 +19,9 @@ public class Main {
             System.out.println("4.Add Members");
             System.out.println("5.Remove Members");
             System.out.println("6.Show all Members");
-            System.out.println("7.Show Books Borrowed By members");
-            System.out.println("8.Exit");
+            System.out.println("7.Issue Book To a member");
+            System.out.println("8.Show Books Borrowed By members");
+            System.out.println("9.Exit");
             System.out.println("=================================");
             System.out.println("ENTER YOUR CHOICE:");
             int choice = sc.nextInt();
@@ -54,6 +55,7 @@ public class Main {
                 case 4:
                     System.out.println("Enter new Member id:");
                     int memberid = sc.nextInt();
+                    sc.nextLine();
                     System.out.println("Enter new Member name:");
                     String membername = sc.nextLine();
                     service.AddMember(memberid, membername);  // Ensure AddMember is defined
@@ -70,10 +72,18 @@ public class Main {
                     service.showmembers();  // Ensure showmembers is defined
                     break;
                 case 7:
+                    service.showmembers();
+                    System.out.println("Enter Member Id From Above Members");
+                    int memberID=sc.nextInt();
+                    service.showBooks();
+                    System.out.println("Enter Book Id To Give To Member");
+                    int bookidtogive= sc.nextInt();
+                    service.giveBookToMember(memberID,bookidtogive);
+                case 8:
                     System.out.println("Books Borrowed Followed By members");
                     service.getBorrowedBooks();
                     break;
-                case 8:
+                case 9:
                     System.out.println("Exiting...");
                     sc.close();
                     return;

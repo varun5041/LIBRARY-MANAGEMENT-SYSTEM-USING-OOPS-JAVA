@@ -7,7 +7,7 @@ public class Member
 {
     int MemberId;
     String Membername;
-    List<Book> borrowedbooks;
+    List<Book> borrowedbooks= new ArrayList<>();
 
 
     public Member(int memberId, String membername) {
